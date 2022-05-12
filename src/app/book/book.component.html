@@ -1,0 +1,8 @@
+<p>book works!</p>
+<button (click)="createBook()">Create Book</button>
+
+<div>
+  <ul *ngFor="let book of bookList">
+    <li>title: {{book.title}}, page count: {{book.pages}}, release year: {{book.releaseYear}}</li>
+  </ul>
+</div>

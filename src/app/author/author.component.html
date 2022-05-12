@@ -1,0 +1,9 @@
+<p>author works!</p>
+
+<h1>Authorname: {{author.name}}</h1>
+
+<div *ngFor="let authorItem of authorList">
+<p>id: {{authorItem.authorId}}, name: {{authorItem.name}}</p>
+</div>
+<button (click)="readAuthorById(1)">Klik mig</button>
+<button (click)="createAuthor()">Opret author</button>
