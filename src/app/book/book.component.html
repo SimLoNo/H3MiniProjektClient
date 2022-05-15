@@ -1,8 +1,10 @@
 <p>book works!</p>
 <button (click)="createBook()">Create Book</button>
+<button (click)="readAllBooks()">read all books</button>
+<button (click)="readBookById()">Read by id</button>
 
 <div>
   <ul *ngFor="let book of bookList">
-    <li>title: {{book.title}}, page count: {{book.pages}}, release year: {{book.releaseYear}}</li>
+    <li>id: {{book.bookId}}, title: {{book.title}}, page count: {{book.pages}}, release year: {{book.releaseYear}}</li>
   </ul>
 </div>

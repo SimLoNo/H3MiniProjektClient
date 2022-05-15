@@ -9,6 +9,7 @@ import { Book } from '../_models/book';
 })
 export class BookComponent implements OnInit {
 
+  book:Book = {bookId:0,title:"",pages:0,wordCound:0,binding:false,releaseYear:0};
   bookList:Book[] = [];
   constructor(private bookService:BookService) { }
 
@@ -26,8 +27,12 @@ export class BookComponent implements OnInit {
     })
   }
 
-  readBookById(){
-
+  readBookById(){ //id:number
+    this.bookService.readBookById(1)
+    .subscribe(data => {
+      console.log("Read book by id: ${id}: " + data.bookId + " " + data.title + " " + data.releaseYear);
+      this.book = data;
+    })
   }
 
   createBook(){

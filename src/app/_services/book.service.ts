@@ -24,11 +24,14 @@ export class BookService {
   readAllBooks():Observable<Book[]>{
     return this.http.get<Book[]>(this.baseUrl);
   }
-  readBookById():Observable<Book>{
-    let id:number = 1;
-    return this.http.get<Book>('${this.baseUrl}/${id}');
+  readBookById(id:number):Observable<Book>{
+    return this.http.get<Book>(this.baseUrl + "/" + id); //'${this.baseUrl}/${id}'
   }
-  updateBook(){}
-  deleteBook(){}
+  updateBook(id:number, book:Book):Observable<Book>{
+    return  this.http.put<Book>('${this.baseUrl}/${id}', book, this.httpOptions)
+  }
+  deleteBook(id:number){
+    return this.http.delete<Book>('${this.baseUrl}/${id}');
+  }
 
 }
