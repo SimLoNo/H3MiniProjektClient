@@ -12,7 +12,7 @@
   <label for="">authorId:</label> <input type="number" formControlName="authorId">
   <!-- <small *ngIf="personForm.get('name').invalid && personForm.get('name').touched" >Name is required</small><br> -->
 
-  <button type="submit" [disabled]="!bookForm.valid" (click)="createBook()">Opret Bog</button>
+  <button type="submit" [disabled]="!bookForm.valid" (click)="sendBook()">Send Bog</button>
   <button type="reset" (click)="cancel()">cancel</button>
 </form>
 
@@ -21,6 +21,7 @@
   <ul *ngFor="let book of bookList">
     <li>
       <button type="button" (click)="deleteBook(book.bookId)">delete</button>
+      <button type="button" (click)="editBook(book)">Edit</button>
       id: {{book.bookId}}, title: {{book.title}}, page count: {{book.pages}}, release year: {{book.releaseYear}}</li>
   </ul>
 </div>
