@@ -17,21 +17,20 @@ export class BookService {
   baseUrl:string = "https://localhost:44331/api/Book";
   constructor(private http:HttpClient) { }
 
-  createBook():Observable<Book>{
-    let book:Book = {bookId:0,title:"Pillars of the Earth",pages:1000,wordCound:40000,binding:true,releaseYear:1990};
-    return this.http.post<Book>(this.baseUrl, book, this.httpOptions);
+  createBook(newBook:Book):Observable<Book>{
+    return this.http.post<Book>(this.baseUrl, newBook, this.httpOptions);
   }
   readAllBooks():Observable<Book[]>{
     return this.http.get<Book[]>(this.baseUrl);
   }
   readBookById(id:number):Observable<Book>{
-    return this.http.get<Book>(this.baseUrl + "/" + id); //'${this.baseUrl}/${id}'
+    return this.http.get<Book>(`${this.baseUrl}/${id}`); //'${this.baseUrl}/${id}'
   }
   updateBook(id:number, book:Book):Observable<Book>{
-    return  this.http.put<Book>('${this.baseUrl}/${id}', book, this.httpOptions)
+    return  this.http.put<Book>(`${this.baseUrl}/${id}`, book, this.httpOptions)
   }
   deleteBook(id:number){
-    return this.http.delete<Book>('${this.baseUrl}/${id}');
+    return this.http.delete<Book>(`${this.baseUrl}/${id}`);
   }
 
 }

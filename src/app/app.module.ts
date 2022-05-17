@@ -1,3 +1,5 @@
+import { PersonComponent } from './person/person.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -17,12 +19,15 @@ import { BookComponent } from './book/book.component';
     Side2Component,
     Side5Component,
     AuthorComponent,
-    BookComponent
+    BookComponent,
+    PersonComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

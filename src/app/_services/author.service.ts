@@ -20,26 +20,23 @@ export class AuthorService {
 
   constructor(private http:HttpClient) {}
 
-  createAuthor():Observable<Author>{
-    let author:Author = {authorId:0,name:"Karen",age:60,isAlive:true,password:"Karen!"};
-    return this.http.post<Author>(this.baseUrl, author, this.httpOptions);
+  createAuthor(newAuthor:Author):Observable<Author>{
+    return this.http.post<Author>(this.baseUrl, newAuthor, this.httpOptions);
   }
   readAllAuthors():Observable<Author[]>{
     return this.http.get<Author[]>(this.baseUrl)
 
   }
-  readAuthorById(id:number):Author{
-    let author:Author = {authorId:1,name:"Karsten", age:20, isAlive:true, password:"passw0rd"}
-    if (author.authorId == id) {
-      return author;
-    }
-    return {authorId:0,name:"",age:0,isAlive:false,password:""};
+  readAuthorById(id:number):Observable<Author>{
+    return this.http.get<Author>(`${this.baseUrl}/${id}`);
   }
   readAuthorByName(){}
   readAuthorByBook(){}
-  updateAuthor(){}
+  updateAuthor(author:Author):Observable<Author>{
+    return this.http.put<Author>(`${this.baseUrl}/${author.authorId}`, author, this.httpOptions);
+  }
   deleteAuthor(id:number):Observable<Author>{
-    return this.http.delete<Author>('${this.baseUrl}/${id}');
+    return this.http.delete<Author>(`${this.baseUrl}/${id}`);
   }
 
   hansOgGrethe():string{

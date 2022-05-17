@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthorService } from './../_services/author.service';
 import { Author } from './../_models/author';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class AuthorComponent implements OnInit {
   title = 'My title';
   author:Author={authorId:0,name:"",age:0,isAlive:false,password:""};
-  authorList: Author[] = []
+  readonly authorDefaultValues:Author = {authorId:0, name:'', age:0, isAlive:false, password:''};
+  authorList: Author[] = [];
   constructor(private authorService: AuthorService) {
     // this.authorList = [
     //   {authorId:1,name:"Ken Follet"},
@@ -20,6 +22,14 @@ export class AuthorComponent implements OnInit {
       //console.log(element);
     });
    }
+
+   authorForm = new FormGroup({
+     authorId:new FormControl(0),
+     name:new FormControl('', Validators.required),
+     age:new FormControl('', Validators.required),
+     isAlive:new FormControl(false, Validators.required, ),
+     password:new FormControl('', Validators.required)
+   })
 
   ngOnInit(): void {
     // console.log(this.authorService.hansOgGrethe());
@@ -49,13 +59,58 @@ export class AuthorComponent implements OnInit {
   }
 
   createAuthor(){
-    this.authorService.createAuthor()
+    let newAuthor:Author = this.authorForm.value;
+    newAuthor.authorId = 0;
+    this.authorService.createAuthor(newAuthor)
     .subscribe(data =>{
       console.log(data);
       this.readAllAuthors();
 
     });
+  }
 
+  deleteAuthor(authorId:number){
+    console.log("Delete id: " + authorId);
+
+    this.authorService.deleteAuthor(authorId)
+    .subscribe(data => {
+      console.log("deleted returns: " + data.authorId);
+      this.authorList = this.authorList.filter(author => author.authorId != authorId);
+
+    })
+
+  }
+
+  sendAuthor(){
+    let author:Author = this.authorForm.value;
+    if (author.authorId == 0 || author.authorId == undefined) {
+      author.authorId = 0;
+      this.authorService.createAuthor(author)
+      .subscribe(data => {
+        console.log(data);
+        this.authorList.push(data);
+
+      })
+    }
+    else {
+      this.authorService.updateAuthor(author)
+      .subscribe(data => {
+        console.log(data);
+        let authorIndex:number = this.authorList.findIndex(authorItem => authorItem.authorId == data.authorId)
+        this.authorList[authorIndex] = data;
+      })
+
+    }
+  }
+
+  editAuthor(author:Author){
+    this.authorForm.setValue(author);
+  }
+
+  cancel(){
+    let author:Author = {authorId:0, name:'', age:0, isAlive:false, password:''};
+    this.authorForm.setValue(author);
+    console.log(this.authorForm.value);
 
   }
 

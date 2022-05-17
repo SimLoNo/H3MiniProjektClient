@@ -1,3 +1,4 @@
+import { PersonComponent } from './person/person.component';
 import { BookComponent } from './book/book.component';
 import { AuthorComponent } from './author/author.component';
 import { Side2Component } from './side2/side2.component';
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path:'side2', component: Side2Component},
   {path:'side5', component: Side5Component},
   {path:'author', component: AuthorComponent},
-  {path:'book', component: BookComponent}
+  {path:'book', component: BookComponent},
+  {path:'person', component: PersonComponent}
 ];
 
 @NgModule({
