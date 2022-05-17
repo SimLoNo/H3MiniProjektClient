@@ -1,7 +1,7 @@
+import { Book } from './../_models/book';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BookService } from './../_services/book.service';
 import { Component, OnInit } from '@angular/core';
-import { Book } from '../_models/book';
 
 @Component({
   selector: 'app-book',
@@ -61,5 +61,34 @@ export class BookComponent implements OnInit {
       this.bookList = this.bookList.filter(author => author.authorId != id);
     })
 
+  }
+
+  sendBook(){
+    let book:Book = this.bookForm.value;
+    if (book.bookId == 0 || book.bookId == undefined) {
+      book.authorId = 0;
+      this.bookService.createBook(book)
+      .subscribe(data => {
+        console.log(data);
+        this.bookList.push(data);
+
+      })
+    }
+    else {
+      this.bookService.updateBook(book.bookId,book)
+      .subscribe(data => {
+        console.log(data);
+        let bookIndex:number = this.bookList.findIndex(bookitem => bookitem.bookId == data.bookId)
+        this.bookList[bookIndex] = data;
+      })
+
+    }
+  }
+
+
+  cancel(){
+    let book:Book = {bookId:0, title:'', wordCound:0, binding:false, releaseYear:0, pages:0, authorId:0};
+    this.bookForm.setValue(this.book);
+    console.log(this.bookForm.value);
   }
 }

@@ -96,7 +96,7 @@ export class AuthorComponent implements OnInit {
       this.authorService.updateAuthor(author)
       .subscribe(data => {
         console.log(data);
-        let authorIndex:number = this.authorList.findIndex(author => author.authorId == data.authorId)
+        let authorIndex:number = this.authorList.findIndex(authorItem => authorItem.authorId == data.authorId)
         this.authorList[authorIndex] = data;
       })
 

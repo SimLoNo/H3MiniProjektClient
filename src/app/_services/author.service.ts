@@ -27,12 +27,8 @@ export class AuthorService {
     return this.http.get<Author[]>(this.baseUrl)
 
   }
-  readAuthorById(id:number):Author{
-    let author:Author = {authorId:1,name:"Karsten", age:20, isAlive:true, password:"passw0rd"}
-    if (author.authorId == id) {
-      return author;
-    }
-    return {authorId:0,name:"",age:0,isAlive:false,password:""};
+  readAuthorById(id:number):Observable<Author>{
+    return this.http.get<Author>(`${this.baseUrl}/${id}`);
   }
   readAuthorByName(){}
   readAuthorByBook(){}
@@ -40,7 +36,7 @@ export class AuthorService {
     return this.http.put<Author>(`${this.baseUrl}/${author.authorId}`, author, this.httpOptions);
   }
   deleteAuthor(id:number):Observable<Author>{
-    return this.http.delete<Author>(this.baseUrl + "/" + id);
+    return this.http.delete<Author>(`${this.baseUrl}/${id}`);
   }
 
   hansOgGrethe():string{

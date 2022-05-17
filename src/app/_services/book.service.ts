@@ -24,7 +24,7 @@ export class BookService {
     return this.http.get<Book[]>(this.baseUrl);
   }
   readBookById(id:number):Observable<Book>{
-    return this.http.get<Book>(this.baseUrl + "/" + id); //'${this.baseUrl}/${id}'
+    return this.http.get<Book>(`${this.baseUrl}/${id}`); //'${this.baseUrl}/${id}'
   }
   updateBook(id:number, book:Book):Observable<Book>{
     return  this.http.put<Book>(`${this.baseUrl}/${id}`, book, this.httpOptions)

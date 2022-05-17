@@ -13,6 +13,7 @@
   <!-- <small *ngIf="personForm.get('name').invalid && personForm.get('name').touched" >Name is required</small><br> -->
 
   <button type="submit" [disabled]="!bookForm.valid" (click)="createBook()">Opret Bog</button>
+  <button type="reset" (click)="cancel()">cancel</button>
 </form>
 
 
