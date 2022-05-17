@@ -27,10 +27,10 @@ export class BookService {
     return this.http.get<Book>(this.baseUrl + "/" + id); //'${this.baseUrl}/${id}'
   }
   updateBook(id:number, book:Book):Observable<Book>{
-    return  this.http.put<Book>('${this.baseUrl}/${id}', book, this.httpOptions)
+    return  this.http.put<Book>(`${this.baseUrl}/${id}`, book, this.httpOptions)
   }
   deleteBook(id:number){
-    return this.http.delete<Book>('${this.baseUrl}/${id}');
+    return this.http.delete<Book>(`${this.baseUrl}/${id}`);
   }
 
 }

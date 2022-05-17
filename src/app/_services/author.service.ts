@@ -36,7 +36,9 @@ export class AuthorService {
   }
   readAuthorByName(){}
   readAuthorByBook(){}
-  updateAuthor(){}
+  updateAuthor(author:Author):Observable<Author>{
+    return this.http.put<Author>(`${this.baseUrl}/${author.authorId}`, author, this.httpOptions);
+  }
   deleteAuthor(id:number):Observable<Author>{
     return this.http.delete<Author>(this.baseUrl + "/" + id);
   }

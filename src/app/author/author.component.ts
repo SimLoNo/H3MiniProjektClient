@@ -11,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class AuthorComponent implements OnInit {
   title = 'My title';
   author:Author={authorId:0,name:"",age:0,isAlive:false,password:""};
-  authorList: Author[] = []
+  readonly authorDefaultValues:Author = {authorId:0, name:'', age:0, isAlive:false, password:''};
+  authorList: Author[] = [];
   constructor(private authorService: AuthorService) {
     // this.authorList = [
     //   {authorId:1,name:"Ken Follet"},
@@ -23,7 +24,7 @@ export class AuthorComponent implements OnInit {
    }
 
    authorForm = new FormGroup({
-     authorId:new FormControl(''),
+     authorId:new FormControl(0),
      name:new FormControl('', Validators.required),
      age:new FormControl('', Validators.required),
      isAlive:new FormControl(false, Validators.required, ),
@@ -77,6 +78,39 @@ export class AuthorComponent implements OnInit {
       this.authorList = this.authorList.filter(author => author.authorId != authorId);
 
     })
+
+  }
+
+  sendAuthor(){
+    let author:Author = this.authorForm.value;
+    if (author.authorId == 0 || author.authorId == undefined) {
+      author.authorId = 0;
+      this.authorService.createAuthor(author)
+      .subscribe(data => {
+        console.log(data);
+        this.authorList.push(data);
+
+      })
+    }
+    else {
+      this.authorService.updateAuthor(author)
+      .subscribe(data => {
+        console.log(data);
+        let authorIndex:number = this.authorList.findIndex(author => author.authorId == data.authorId)
+        this.authorList[authorIndex] = data;
+      })
+
+    }
+  }
+
+  editAuthor(author:Author){
+    this.authorForm.setValue(author);
+  }
+
+  cancel(){
+    let author:Author = {authorId:0, name:'', age:0, isAlive:false, password:''};
+    this.authorForm.setValue(author);
+    console.log(this.authorForm.value);
 
   }
 

@@ -9,12 +9,14 @@
   <label for="">is alive:</label> <input type="checkbox" value="true" formControlName="isAlive">
   <label for="">password:</label> <input type="text" formControlName="password">
 
-  <button type="submit" [disabled]="!authorForm.valid" (click)="createAuthor()">Opret author</button>
+  <button type="submit" [disabled]="!authorForm.valid" (click)="sendAuthor()">Send author</button>
+  <button type="reset" (click)="cancel()">cancel</button>
 </form>
 
 <ul >
   <li *ngFor="let authorItem of authorList">
     <button type="button" (click)="deleteAuthor(authorItem.authorId)">delete</button>
+    <button type="button" (click)="editAuthor(authorItem)">edit</button>
     id: {{authorItem.authorId}}, name: {{authorItem.name}} age: {{authorItem.age}}, is alive: {{authorItem.isAlive}}
     </li>
 </ul>
