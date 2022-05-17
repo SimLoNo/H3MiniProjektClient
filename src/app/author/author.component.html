@@ -2,8 +2,20 @@
 
 <h1>Authorname: {{author.name}}</h1>
 
-<div *ngFor="let authorItem of authorList">
-<p>id: {{authorItem.authorId}}, name: {{authorItem.name}}</p>
-</div>
+<form [formGroup]="authorForm">
+  <label for="">name:</label> <input type="text" formControlName="name">
+  <!-- <small *ngIf="personForm.get('name').invalid && personForm.get('name').touched" >Name is required</small><br> -->
+  <label for="">age:</label> <input type="number" formControlName="age">
+  <label for="">is alive:</label> <input type="checkbox" value="true" formControlName="isAlive">
+  <label for="">password:</label> <input type="text" formControlName="password">
+
+  <button type="submit" [disabled]="!authorForm.valid" (click)="createAuthor()">Opret author</button>
+</form>
+
+<ul >
+  <li *ngFor="let authorItem of authorList">
+    <button type="button" (click)="deleteAuthor(authorItem.authorId)">delete</button>
+    id: {{authorItem.authorId}}, name: {{authorItem.name}} age: {{authorItem.age}}, is alive: {{authorItem.isAlive}}
+    </li>
+</ul>
 <button (click)="readAuthorById(1)">Klik mig</button>
-<button (click)="createAuthor()">Opret author</button>

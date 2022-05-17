@@ -20,9 +20,8 @@ export class AuthorService {
 
   constructor(private http:HttpClient) {}
 
-  createAuthor():Observable<Author>{
-    let author:Author = {authorId:0,name:"Karen",age:60,isAlive:true,password:"Karen!"};
-    return this.http.post<Author>(this.baseUrl, author, this.httpOptions);
+  createAuthor(newAuthor:Author):Observable<Author>{
+    return this.http.post<Author>(this.baseUrl, newAuthor, this.httpOptions);
   }
   readAllAuthors():Observable<Author[]>{
     return this.http.get<Author[]>(this.baseUrl)
@@ -39,7 +38,7 @@ export class AuthorService {
   readAuthorByBook(){}
   updateAuthor(){}
   deleteAuthor(id:number):Observable<Author>{
-    return this.http.delete<Author>('${this.baseUrl}/${id}');
+    return this.http.delete<Author>(this.baseUrl + "/" + id);
   }
 
   hansOgGrethe():string{

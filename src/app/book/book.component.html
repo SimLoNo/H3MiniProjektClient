@@ -3,8 +3,23 @@
 <button (click)="readAllBooks()">read all books</button>
 <button (click)="readBookById()">Read by id</button>
 
+<form [formGroup]="bookForm">
+  <label for="">title:</label> <input type="text" formControlName="title">
+  <label for="">word count:</label> <input type="number" formControlName="wordCound">
+  <label for="">pages:</label> <input type="number" formControlName="pages">
+  <label for="">hardcover:</label> <input type="checkbox" value="true" formControlName="binding">
+  <label for="">release year:</label> <input type="number" formControlName="releaseYear">
+  <label for="">authorId:</label> <input type="number" formControlName="authorId">
+  <!-- <small *ngIf="personForm.get('name').invalid && personForm.get('name').touched" >Name is required</small><br> -->
+
+  <button type="submit" [disabled]="!bookForm.valid" (click)="createBook()">Opret Bog</button>
+</form>
+
+
 <div>
   <ul *ngFor="let book of bookList">
-    <li>id: {{book.bookId}}, title: {{book.title}}, page count: {{book.pages}}, release year: {{book.releaseYear}}</li>
+    <li>
+      <button type="button" (click)="deleteBook(book.bookId)">delete</button>
+      id: {{book.bookId}}, title: {{book.title}}, page count: {{book.pages}}, release year: {{book.releaseYear}}</li>
   </ul>
 </div>

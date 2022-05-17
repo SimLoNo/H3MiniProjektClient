@@ -1,0 +1,14 @@
+<p>person works!</p>
+<form [formGroup]="personForm">
+  <label for="">name:</label> <input type="text" formControlName="name">
+  <!-- <small *ngIf="personForm.get('name').invalid && personForm.get('name').touched" >Name is required</small><br> -->
+  <label for="">mail:</label> <input type="text" formControlName="mail">
+  <!-- <small *ngIf="personForm.get('mail').invalid && personForm.get('mail').touched">Email is required</small><br> -->
+  <label for="">phone:</label> <input type="text" formControlName="phone">
+  <!-- <small *ngIf="personForm.get('phone').invalid && personForm.get('phone').touched">Phone is required</small><br> -->
+  <label for="">message:</label> <input type="text" formControlName="message">
+  <!-- <small *ngIf="personForm.get('message').invalid && personForm.get('message').touched">message is required (minimumLength 10)</small><br> -->
+  <label for="">password:</label> <input type="text" formControlName="password">
+
+  <button type="submit" [disabled]="!personForm.valid" (click)=postPerson()>Send Message</button>
+</form>

@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthorService } from './../_services/author.service';
 import { Author } from './../_models/author';
 import { Component, OnInit } from '@angular/core';
@@ -20,6 +21,14 @@ export class AuthorComponent implements OnInit {
       //console.log(element);
     });
    }
+
+   authorForm = new FormGroup({
+     authorId:new FormControl(''),
+     name:new FormControl('', Validators.required),
+     age:new FormControl('', Validators.required),
+     isAlive:new FormControl(false, Validators.required, ),
+     password:new FormControl('', Validators.required)
+   })
 
   ngOnInit(): void {
     // console.log(this.authorService.hansOgGrethe());
@@ -49,13 +58,25 @@ export class AuthorComponent implements OnInit {
   }
 
   createAuthor(){
-    this.authorService.createAuthor()
+    let newAuthor:Author = this.authorForm.value;
+    newAuthor.authorId = 0;
+    this.authorService.createAuthor(newAuthor)
     .subscribe(data =>{
       console.log(data);
       this.readAllAuthors();
 
     });
+  }
 
+  deleteAuthor(authorId:number){
+    console.log("Delete id: " + authorId);
+
+    this.authorService.deleteAuthor(authorId)
+    .subscribe(data => {
+      console.log("deleted returns: " + data.authorId);
+      this.authorList = this.authorList.filter(author => author.authorId != authorId);
+
+    })
 
   }
 

@@ -17,9 +17,8 @@ export class BookService {
   baseUrl:string = "https://localhost:44331/api/Book";
   constructor(private http:HttpClient) { }
 
-  createBook():Observable<Book>{
-    let book:Book = {bookId:0,title:"Pillars of the Earth",pages:1000,wordCound:40000,binding:true,releaseYear:1990};
-    return this.http.post<Book>(this.baseUrl, book, this.httpOptions);
+  createBook(newBook:Book):Observable<Book>{
+    return this.http.post<Book>(this.baseUrl, newBook, this.httpOptions);
   }
   readAllBooks():Observable<Book[]>{
     return this.http.get<Book[]>(this.baseUrl);

@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BookService } from './../_services/book.service';
 import { Component, OnInit } from '@angular/core';
 import { Book } from '../_models/book';
@@ -9,7 +10,16 @@ import { Book } from '../_models/book';
 })
 export class BookComponent implements OnInit {
 
-  book:Book = {bookId:0,title:"",pages:0,wordCound:0,binding:false,releaseYear:0};
+  bookForm = new FormGroup({
+    bookId: new FormControl(0),
+    title: new FormControl('', Validators.required),
+    pages: new FormControl('', Validators.required),
+    wordCound: new FormControl('', Validators.required),
+    binding: new FormControl(false, Validators.required),
+    releaseYear: new FormControl('', Validators.required),
+    authorId: new FormControl('', Validators.required)
+  })
+  book:Book = {bookId:0,title:"",pages:0,wordCound:0,binding:false,releaseYear:0, authorId:0};
   bookList:Book[] = [];
   constructor(private bookService:BookService) { }
 
@@ -36,7 +46,7 @@ export class BookComponent implements OnInit {
   }
 
   createBook(){
-    this.bookService.createBook()
+    this.bookService.createBook(this.bookForm.value)
     .subscribe(data => {
       console.log(data);
       this.readAllBooks();
@@ -44,4 +54,12 @@ export class BookComponent implements OnInit {
     })
   }
 
+  deleteBook(id:number){
+    this.bookService.deleteBook(id)
+    .subscribe(data =>{
+      console.log(data);
+      this.bookList = this.bookList.filter(author => author.authorId != id);
+    })
+
+  }
 }
